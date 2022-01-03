@@ -38,6 +38,7 @@ public class Tests {
     @Test
     void noLogsTest() {
         given()
+                .filter(customLogFilter().withCustomTemplates())
                 .get("https://demoqa.com/BookStore/v1/Books")
                 .then()
                 .body("books", hasSize(greaterThan(0)));
@@ -46,6 +47,7 @@ public class Tests {
     @Test
     void withAllLogsTest() {
         given()
+                .filter(customLogFilter().withCustomTemplates())
                 .log().all()
                 .get("https://demoqa.com/BookStore/v1/Books")
                 .then()
@@ -56,6 +58,7 @@ public class Tests {
     @Test
     void withSomeLogsTest() {
         given()
+                .filter(customLogFilter().withCustomTemplates())
                 .log().uri()
                 .log().body()
                 .get("https://demoqa.com/BookStore/v1/Books")
@@ -72,8 +75,8 @@ public class Tests {
         data.put("password", password);
 
         given()
+                .filter(customLogFilter().withCustomTemplates())
                 .contentType("application/json")
-                .accept("application/json")
                 .body(data)
                 .when()
                 .log().uri()
@@ -92,7 +95,7 @@ public class Tests {
         data.put("password", password);
 
         given()
-                .filter(new AllureRestAssured())
+                .filter(customLogFilter().withCustomTemplates())
                 .contentType("application/json")
                 .accept("application/json")
                 .body(data)
